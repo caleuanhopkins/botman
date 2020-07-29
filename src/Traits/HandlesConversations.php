@@ -107,7 +107,8 @@ trait HandlesConversations
          * Only remove it from the cache if it was not modified
          * after we loaded the data from the cache.
          */
-        if ($this->getStoredConversation($message)['time'] == $this->currentConversationData['time']) {
+        $convo = $this->getStoredConversation($message);
+        if (!empty($convo['time']) && $convo['time'] == $this->currentConversationData['time']) {
             $this->cache->pull($this->message->getConversationIdentifier());
             $this->cache->pull($this->message->getOriginatedConversationIdentifier());
         }
